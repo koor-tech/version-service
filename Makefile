@@ -1,13 +1,10 @@
 .PHONY: build
-build: protoc
+build: buf
+	$(BUF) generate
 
-.PHONY: protoc
-protoc:
-	protoc --go_out=. \
-		--go_opt=paths=source_relative \
-		--go-grpc_out=. \
-		--go-grpc_opt=paths=source_relative \
-		api/*.proto
+lint: buf
+	$(BUF) lint
+	$(BUF) breaking --against '.git#branch=main'
 
 ##@ Build Dependencies
 
@@ -17,3 +14,12 @@ $(LOCALBIN):
 	mkdir -p $(LOCALBIN)
 
 ## Tool Binaries
+BUF ?= $(LOCALBIN)/buf
+
+## Tool Versions
+BUF_VERSION ?= v1.23.1
+
+.PHONY: buf
+buf: $(BUF)
+$(BUF):
+	GO111MODULE=on GOBIN=$(LOCALBIN) go install github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION)
