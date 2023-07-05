@@ -15,9 +15,9 @@ limitations under the License.
 */
 syntax = "proto3";
 
-package api;
+package api.v1;
 
-option go_package = "github.com/koor-tech/version-service/api";
+option go_package = "github.com/koor-tech/version-service/api/v1";
 
 service VersionService {
     rpc Operator(OperatorRequest) returns (OperatorResponse){};

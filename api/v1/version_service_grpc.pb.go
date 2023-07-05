@@ -17,9 +17,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: api/version_service.proto
+// source: api/v1/version_service.proto
 
-package api
+package apiv1
 
 import (
 	context "context"
@@ -34,7 +34,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	VersionService_Operator_FullMethodName = "/api.VersionService/Operator"
+	VersionService_Operator_FullMethodName = "/api.v1.VersionService/Operator"
 )
 
 // VersionServiceClient is the client API for VersionService service.
@@ -111,7 +111,7 @@ func _VersionService_Operator_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var VersionService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.VersionService",
+	ServiceName: "api.v1.VersionService",
 	HandlerType: (*VersionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -120,5 +120,5 @@ var VersionService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/version_service.proto",
+	Metadata: "api/v1/version_service.proto",
 }

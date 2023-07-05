@@ -1,4 +1,4 @@
-module github.com/koor-tech/version-service/api
+module github.com/koor-tech/version-service/api/v1
 
 go 1.19
 
