@@ -3,6 +3,7 @@ module github.com/koor-tech/version-service/api/v1
 go 1.19
 
 require (
+	github.com/envoyproxy/protoc-gen-validate v0.10.1
 	google.golang.org/grpc v1.56.1
 	google.golang.org/protobuf v1.31.0
 )
