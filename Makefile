@@ -24,7 +24,6 @@ help: ## Display this help.
 build: buf
 	$(BUF) build
 	$(BUF) generate
-	cd api/v1 && go build
 
 ##@ Development
 
