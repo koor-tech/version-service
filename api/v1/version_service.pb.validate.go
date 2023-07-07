@@ -35,50 +35,86 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on CurrentVersions with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *CurrentVersions) Validate() error {
+// Validate checks the field values on SimpleVersions with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SimpleVersions) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CurrentVersions with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// CurrentVersionsMultiError, or nil if none found.
-func (m *CurrentVersions) ValidateAll() error {
+// ValidateAll checks the field values on SimpleVersions with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SimpleVersionsMultiError,
+// or nil if none found.
+func (m *SimpleVersions) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CurrentVersions) validate(all bool) error {
+func (m *SimpleVersions) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	// no validation rules for Kube
+	if !_SimpleVersions_Kube_Pattern.MatchString(m.GetKube()) {
+		err := SimpleVersionsValidationError{
+			field:  "Kube",
+			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for KoorOperator
+	if !_SimpleVersions_KoorOperator_Pattern.MatchString(m.GetKoorOperator()) {
+		err := SimpleVersionsValidationError{
+			field:  "KoorOperator",
+			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for Ksd
+	if !_SimpleVersions_Ksd_Pattern.MatchString(m.GetKsd()) {
+		err := SimpleVersionsValidationError{
+			field:  "Ksd",
+			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for Ceph
+	if !_SimpleVersions_Ceph_Pattern.MatchString(m.GetCeph()) {
+		err := SimpleVersionsValidationError{
+			field:  "Ceph",
+			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
-		return CurrentVersionsMultiError(errors)
+		return SimpleVersionsMultiError(errors)
 	}
 
 	return nil
 }
 
-// CurrentVersionsMultiError is an error wrapping multiple validation errors
-// returned by CurrentVersions.ValidateAll() if the designated constraints
+// SimpleVersionsMultiError is an error wrapping multiple validation errors
+// returned by SimpleVersions.ValidateAll() if the designated constraints
 // aren't met.
-type CurrentVersionsMultiError []error
+type SimpleVersionsMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CurrentVersionsMultiError) Error() string {
+func (m SimpleVersionsMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -87,11 +123,11 @@ func (m CurrentVersionsMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CurrentVersionsMultiError) AllErrors() []error { return m }
+func (m SimpleVersionsMultiError) AllErrors() []error { return m }
 
-// CurrentVersionsValidationError is the validation error returned by
-// CurrentVersions.Validate if the designated constraints aren't met.
-type CurrentVersionsValidationError struct {
+// SimpleVersionsValidationError is the validation error returned by
+// SimpleVersions.Validate if the designated constraints aren't met.
+type SimpleVersionsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -99,22 +135,22 @@ type CurrentVersionsValidationError struct {
 }
 
 // Field function returns field value.
-func (e CurrentVersionsValidationError) Field() string { return e.field }
+func (e SimpleVersionsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CurrentVersionsValidationError) Reason() string { return e.reason }
+func (e SimpleVersionsValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CurrentVersionsValidationError) Cause() error { return e.cause }
+func (e SimpleVersionsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CurrentVersionsValidationError) Key() bool { return e.key }
+func (e SimpleVersionsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CurrentVersionsValidationError) ErrorName() string { return "CurrentVersionsValidationError" }
+func (e SimpleVersionsValidationError) ErrorName() string { return "SimpleVersionsValidationError" }
 
 // Error satisfies the builtin error interface
-func (e CurrentVersionsValidationError) Error() string {
+func (e SimpleVersionsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -126,14 +162,14 @@ func (e CurrentVersionsValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCurrentVersions.%s: %s%s",
+		"invalid %sSimpleVersions.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CurrentVersionsValidationError{}
+var _ error = SimpleVersionsValidationError{}
 
 var _ interface {
 	Field() string
@@ -141,7 +177,15 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CurrentVersionsValidationError{}
+} = SimpleVersionsValidationError{}
+
+var _SimpleVersions_Kube_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+
+var _SimpleVersions_KoorOperator_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+
+var _SimpleVersions_Ksd_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+
+var _SimpleVersions_Ceph_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
 
 // Validate checks the field values on OperatorRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -166,11 +210,11 @@ func (m *OperatorRequest) validate(all bool) error {
 	var errors []error
 
 	if all {
-		switch v := interface{}(m.GetCurrentVersions()).(type) {
+		switch v := interface{}(m.GetVersions()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, OperatorRequestValidationError{
-					field:  "CurrentVersions",
+					field:  "Versions",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -178,16 +222,16 @@ func (m *OperatorRequest) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, OperatorRequestValidationError{
-					field:  "CurrentVersions",
+					field:  "Versions",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetCurrentVersions()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetVersions()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return OperatorRequestValidationError{
-				field:  "CurrentVersions",
+				field:  "Versions",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -294,7 +338,16 @@ func (m *ImageVersion) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Version
+	if !_ImageVersion_Version_Pattern.MatchString(m.GetVersion()) {
+		err := ImageVersionValidationError{
+			field:  "Version",
+			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if uri, err := url.Parse(m.GetImage()); err != nil {
 		err = ImageVersionValidationError{
@@ -396,6 +449,8 @@ var _ interface {
 	ErrorName() string
 } = ImageVersionValidationError{}
 
+var _ImageVersion_Version_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+
 // Validate checks the field values on HelmVersion with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -418,7 +473,16 @@ func (m *HelmVersion) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Version
+	if !_HelmVersion_Version_Pattern.MatchString(m.GetVersion()) {
+		err := HelmVersionValidationError{
+			field:  "Version",
+			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if uri, err := url.Parse(m.GetRepository()); err != nil {
 		err = HelmVersionValidationError{
@@ -520,22 +584,24 @@ var _ interface {
 	ErrorName() string
 } = HelmVersionValidationError{}
 
-// Validate checks the field values on LatestVersions with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *LatestVersions) Validate() error {
+var _HelmVersion_Version_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+
+// Validate checks the field values on DetailedVersions with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *DetailedVersions) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on LatestVersions with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in LatestVersionsMultiError,
-// or nil if none found.
-func (m *LatestVersions) ValidateAll() error {
+// ValidateAll checks the field values on DetailedVersions with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DetailedVersionsMultiError, or nil if none found.
+func (m *DetailedVersions) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *LatestVersions) validate(all bool) error {
+func (m *DetailedVersions) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -546,7 +612,7 @@ func (m *LatestVersions) validate(all bool) error {
 		switch v := interface{}(m.GetKoorOperator()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, LatestVersionsValidationError{
+				errors = append(errors, DetailedVersionsValidationError{
 					field:  "KoorOperator",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -554,7 +620,7 @@ func (m *LatestVersions) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, LatestVersionsValidationError{
+				errors = append(errors, DetailedVersionsValidationError{
 					field:  "KoorOperator",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -563,7 +629,7 @@ func (m *LatestVersions) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetKoorOperator()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return LatestVersionsValidationError{
+			return DetailedVersionsValidationError{
 				field:  "KoorOperator",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -575,7 +641,7 @@ func (m *LatestVersions) validate(all bool) error {
 		switch v := interface{}(m.GetKsd()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, LatestVersionsValidationError{
+				errors = append(errors, DetailedVersionsValidationError{
 					field:  "Ksd",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -583,7 +649,7 @@ func (m *LatestVersions) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, LatestVersionsValidationError{
+				errors = append(errors, DetailedVersionsValidationError{
 					field:  "Ksd",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -592,7 +658,7 @@ func (m *LatestVersions) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetKsd()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return LatestVersionsValidationError{
+			return DetailedVersionsValidationError{
 				field:  "Ksd",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -604,7 +670,7 @@ func (m *LatestVersions) validate(all bool) error {
 		switch v := interface{}(m.GetCeph()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, LatestVersionsValidationError{
+				errors = append(errors, DetailedVersionsValidationError{
 					field:  "Ceph",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -612,7 +678,7 @@ func (m *LatestVersions) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, LatestVersionsValidationError{
+				errors = append(errors, DetailedVersionsValidationError{
 					field:  "Ceph",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -621,7 +687,7 @@ func (m *LatestVersions) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetCeph()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return LatestVersionsValidationError{
+			return DetailedVersionsValidationError{
 				field:  "Ceph",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -630,19 +696,19 @@ func (m *LatestVersions) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return LatestVersionsMultiError(errors)
+		return DetailedVersionsMultiError(errors)
 	}
 
 	return nil
 }
 
-// LatestVersionsMultiError is an error wrapping multiple validation errors
-// returned by LatestVersions.ValidateAll() if the designated constraints
+// DetailedVersionsMultiError is an error wrapping multiple validation errors
+// returned by DetailedVersions.ValidateAll() if the designated constraints
 // aren't met.
-type LatestVersionsMultiError []error
+type DetailedVersionsMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m LatestVersionsMultiError) Error() string {
+func (m DetailedVersionsMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -651,11 +717,11 @@ func (m LatestVersionsMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m LatestVersionsMultiError) AllErrors() []error { return m }
+func (m DetailedVersionsMultiError) AllErrors() []error { return m }
 
-// LatestVersionsValidationError is the validation error returned by
-// LatestVersions.Validate if the designated constraints aren't met.
-type LatestVersionsValidationError struct {
+// DetailedVersionsValidationError is the validation error returned by
+// DetailedVersions.Validate if the designated constraints aren't met.
+type DetailedVersionsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -663,22 +729,22 @@ type LatestVersionsValidationError struct {
 }
 
 // Field function returns field value.
-func (e LatestVersionsValidationError) Field() string { return e.field }
+func (e DetailedVersionsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e LatestVersionsValidationError) Reason() string { return e.reason }
+func (e DetailedVersionsValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e LatestVersionsValidationError) Cause() error { return e.cause }
+func (e DetailedVersionsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e LatestVersionsValidationError) Key() bool { return e.key }
+func (e DetailedVersionsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e LatestVersionsValidationError) ErrorName() string { return "LatestVersionsValidationError" }
+func (e DetailedVersionsValidationError) ErrorName() string { return "DetailedVersionsValidationError" }
 
 // Error satisfies the builtin error interface
-func (e LatestVersionsValidationError) Error() string {
+func (e DetailedVersionsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -690,14 +756,14 @@ func (e LatestVersionsValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sLatestVersions.%s: %s%s",
+		"invalid %sDetailedVersions.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = LatestVersionsValidationError{}
+var _ error = DetailedVersionsValidationError{}
 
 var _ interface {
 	Field() string
@@ -705,7 +771,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = LatestVersionsValidationError{}
+} = DetailedVersionsValidationError{}
 
 // Validate checks the field values on OperatorResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -730,11 +796,11 @@ func (m *OperatorResponse) validate(all bool) error {
 	var errors []error
 
 	if all {
-		switch v := interface{}(m.GetLatestVersions()).(type) {
+		switch v := interface{}(m.GetVersions()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, OperatorResponseValidationError{
-					field:  "LatestVersions",
+					field:  "Versions",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -742,16 +808,16 @@ func (m *OperatorResponse) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, OperatorResponseValidationError{
-					field:  "LatestVersions",
+					field:  "Versions",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetLatestVersions()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetVersions()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return OperatorResponseValidationError{
-				field:  "LatestVersions",
+				field:  "Versions",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}

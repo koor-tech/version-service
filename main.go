@@ -11,9 +11,9 @@ import (
 )
 
 func main() {
-	greeter := &serverv1.VersionServer{}
+	vs := &serverv1.VersionServer{}
 	mux := http.NewServeMux()
-	path, handler := apiv1connect.NewVersionServiceHandler(greeter)
+	path, handler := apiv1connect.NewVersionServiceHandler(vs)
 	mux.Handle(path, handler)
 	http.ListenAndServe(
 		"localhost:8080",
