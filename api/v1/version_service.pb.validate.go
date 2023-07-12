@@ -507,6 +507,29 @@ func (m *HelmVersion) validate(all bool) error {
 
 	// no validation rules for Chart
 
+	if uri, err := url.Parse(m.GetImage()); err != nil {
+		err = HelmVersionValidationError{
+			field:  "Image",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := HelmVersionValidationError{
+			field:  "Image",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Hash
+
 	if len(errors) > 0 {
 		return HelmVersionMultiError(errors)
 	}
@@ -901,3 +924,241 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = OperatorResponseValidationError{}
+
+// Validate checks the field values on VersionMatrix with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *VersionMatrix) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on VersionMatrix with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in VersionMatrixMultiError, or
+// nil if none found.
+func (m *VersionMatrix) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *VersionMatrix) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	{
+		sorted_keys := make([]string, len(m.GetKoorOperator()))
+		i := 0
+		for key := range m.GetKoorOperator() {
+			sorted_keys[i] = key
+			i++
+		}
+		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
+		for _, key := range sorted_keys {
+			val := m.GetKoorOperator()[key]
+			_ = val
+
+			// no validation rules for KoorOperator[key]
+
+			if all {
+				switch v := interface{}(val).(type) {
+				case interface{ ValidateAll() error }:
+					if err := v.ValidateAll(); err != nil {
+						errors = append(errors, VersionMatrixValidationError{
+							field:  fmt.Sprintf("KoorOperator[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				case interface{ Validate() error }:
+					if err := v.Validate(); err != nil {
+						errors = append(errors, VersionMatrixValidationError{
+							field:  fmt.Sprintf("KoorOperator[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				}
+			} else if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return VersionMatrixValidationError{
+						field:  fmt.Sprintf("KoorOperator[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
+		}
+	}
+
+	{
+		sorted_keys := make([]string, len(m.GetKsd()))
+		i := 0
+		for key := range m.GetKsd() {
+			sorted_keys[i] = key
+			i++
+		}
+		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
+		for _, key := range sorted_keys {
+			val := m.GetKsd()[key]
+			_ = val
+
+			// no validation rules for Ksd[key]
+
+			if all {
+				switch v := interface{}(val).(type) {
+				case interface{ ValidateAll() error }:
+					if err := v.ValidateAll(); err != nil {
+						errors = append(errors, VersionMatrixValidationError{
+							field:  fmt.Sprintf("Ksd[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				case interface{ Validate() error }:
+					if err := v.Validate(); err != nil {
+						errors = append(errors, VersionMatrixValidationError{
+							field:  fmt.Sprintf("Ksd[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				}
+			} else if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return VersionMatrixValidationError{
+						field:  fmt.Sprintf("Ksd[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
+		}
+	}
+
+	{
+		sorted_keys := make([]string, len(m.GetCeph()))
+		i := 0
+		for key := range m.GetCeph() {
+			sorted_keys[i] = key
+			i++
+		}
+		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
+		for _, key := range sorted_keys {
+			val := m.GetCeph()[key]
+			_ = val
+
+			// no validation rules for Ceph[key]
+
+			if all {
+				switch v := interface{}(val).(type) {
+				case interface{ ValidateAll() error }:
+					if err := v.ValidateAll(); err != nil {
+						errors = append(errors, VersionMatrixValidationError{
+							field:  fmt.Sprintf("Ceph[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				case interface{ Validate() error }:
+					if err := v.Validate(); err != nil {
+						errors = append(errors, VersionMatrixValidationError{
+							field:  fmt.Sprintf("Ceph[%v]", key),
+							reason: "embedded message failed validation",
+							cause:  err,
+						})
+					}
+				}
+			} else if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+				if err := v.Validate(); err != nil {
+					return VersionMatrixValidationError{
+						field:  fmt.Sprintf("Ceph[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+
+		}
+	}
+
+	if len(errors) > 0 {
+		return VersionMatrixMultiError(errors)
+	}
+
+	return nil
+}
+
+// VersionMatrixMultiError is an error wrapping multiple validation errors
+// returned by VersionMatrix.ValidateAll() if the designated constraints
+// aren't met.
+type VersionMatrixMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m VersionMatrixMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m VersionMatrixMultiError) AllErrors() []error { return m }
+
+// VersionMatrixValidationError is the validation error returned by
+// VersionMatrix.Validate if the designated constraints aren't met.
+type VersionMatrixValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e VersionMatrixValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e VersionMatrixValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e VersionMatrixValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e VersionMatrixValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e VersionMatrixValidationError) ErrorName() string { return "VersionMatrixValidationError" }
+
+// Error satisfies the builtin error interface
+func (e VersionMatrixValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sVersionMatrix.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = VersionMatrixValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = VersionMatrixValidationError{}
