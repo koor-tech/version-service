@@ -31,7 +31,17 @@ func (s *VersionServer) Operator(
 	req *connect.Request[apiv1.OperatorRequest],
 ) (*connect.Response[apiv1.OperatorResponse], error) {
 	log.Println("Request headers: ", req.Header())
-	res := connect.NewResponse(&apiv1.OperatorResponse{})
+	vm, err := getVersionMatrix(req.Msg.Versions.KoorOperator)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+	res := connect.NewResponse(&apiv1.OperatorResponse{
+		Versions: &apiv1.DetailedVersions{
+			KoorOperator: vm.KoorOperator["foo"],
+			Ksd:          vm.Ksd["foo"],
+			Ceph:         vm.Ceph["foo"],
+		},
+	})
 	res.Header().Set("Version-Service-Version", "v1")
 	return res, nil
 }
