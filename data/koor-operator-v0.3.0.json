@@ -1,0 +1,25 @@
+{
+    "koor_operator": {
+        "0.3.0": {
+            "version": "0.3.0",
+            "helm_repository": "https://koor-tech.github.io/koor-operator",
+            "helm_chart":"koor-operator"
+        }
+    },
+    "ksd": {
+        "1.11.3": {
+            "version": "1.11.3",
+            "image_uri": "koorinc/ceph:v1.11.3",
+            "image_hash": "93986cfa4bdf99ef55daa57ceb5a0ccbfa460e6edd14504ebb8897936b76564a",
+            "helm_repository": "https://charts.koor.tech/release",
+            "helm_chart":"rook-ceph"
+        }
+    },
+    "ceph": {
+        "17.2.6": {
+            "version": "17.2.6",
+            "image_uri": "quay.io/ceph/ceph:v17.2.6",
+            "image_hash": "9c067c50038de818e10ab7887929b6bd496d5dcfe55fa1343854a54e61a82fab"
+        }
+    }
+}
