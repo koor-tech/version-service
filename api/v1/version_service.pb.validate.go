@@ -35,30 +35,30 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on SimpleVersions with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *SimpleVersions) Validate() error {
+// Validate checks the field values on ProductVersions with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ProductVersions) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on SimpleVersions with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in SimpleVersionsMultiError,
-// or nil if none found.
-func (m *SimpleVersions) ValidateAll() error {
+// ValidateAll checks the field values on ProductVersions with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ProductVersionsMultiError, or nil if none found.
+func (m *ProductVersions) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *SimpleVersions) validate(all bool) error {
+func (m *ProductVersions) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	if !_SimpleVersions_Kube_Pattern.MatchString(m.GetKube()) {
-		err := SimpleVersionsValidationError{
+	if !_ProductVersions_Kube_Pattern.MatchString(m.GetKube()) {
+		err := ProductVersionsValidationError{
 			field:  "Kube",
 			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
 		}
@@ -68,8 +68,8 @@ func (m *SimpleVersions) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if !_SimpleVersions_KoorOperator_Pattern.MatchString(m.GetKoorOperator()) {
-		err := SimpleVersionsValidationError{
+	if !_ProductVersions_KoorOperator_Pattern.MatchString(m.GetKoorOperator()) {
+		err := ProductVersionsValidationError{
 			field:  "KoorOperator",
 			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
 		}
@@ -79,8 +79,8 @@ func (m *SimpleVersions) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if !_SimpleVersions_Ksd_Pattern.MatchString(m.GetKsd()) {
-		err := SimpleVersionsValidationError{
+	if !_ProductVersions_Ksd_Pattern.MatchString(m.GetKsd()) {
+		err := ProductVersionsValidationError{
 			field:  "Ksd",
 			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
 		}
@@ -90,8 +90,8 @@ func (m *SimpleVersions) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if !_SimpleVersions_Ceph_Pattern.MatchString(m.GetCeph()) {
-		err := SimpleVersionsValidationError{
+	if !_ProductVersions_Ceph_Pattern.MatchString(m.GetCeph()) {
+		err := ProductVersionsValidationError{
 			field:  "Ceph",
 			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
 		}
@@ -102,19 +102,19 @@ func (m *SimpleVersions) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return SimpleVersionsMultiError(errors)
+		return ProductVersionsMultiError(errors)
 	}
 
 	return nil
 }
 
-// SimpleVersionsMultiError is an error wrapping multiple validation errors
-// returned by SimpleVersions.ValidateAll() if the designated constraints
+// ProductVersionsMultiError is an error wrapping multiple validation errors
+// returned by ProductVersions.ValidateAll() if the designated constraints
 // aren't met.
-type SimpleVersionsMultiError []error
+type ProductVersionsMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m SimpleVersionsMultiError) Error() string {
+func (m ProductVersionsMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -123,11 +123,11 @@ func (m SimpleVersionsMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m SimpleVersionsMultiError) AllErrors() []error { return m }
+func (m ProductVersionsMultiError) AllErrors() []error { return m }
 
-// SimpleVersionsValidationError is the validation error returned by
-// SimpleVersions.Validate if the designated constraints aren't met.
-type SimpleVersionsValidationError struct {
+// ProductVersionsValidationError is the validation error returned by
+// ProductVersions.Validate if the designated constraints aren't met.
+type ProductVersionsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -135,22 +135,22 @@ type SimpleVersionsValidationError struct {
 }
 
 // Field function returns field value.
-func (e SimpleVersionsValidationError) Field() string { return e.field }
+func (e ProductVersionsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e SimpleVersionsValidationError) Reason() string { return e.reason }
+func (e ProductVersionsValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e SimpleVersionsValidationError) Cause() error { return e.cause }
+func (e ProductVersionsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e SimpleVersionsValidationError) Key() bool { return e.key }
+func (e ProductVersionsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e SimpleVersionsValidationError) ErrorName() string { return "SimpleVersionsValidationError" }
+func (e ProductVersionsValidationError) ErrorName() string { return "ProductVersionsValidationError" }
 
 // Error satisfies the builtin error interface
-func (e SimpleVersionsValidationError) Error() string {
+func (e ProductVersionsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -162,14 +162,14 @@ func (e SimpleVersionsValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sSimpleVersions.%s: %s%s",
+		"invalid %sProductVersions.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = SimpleVersionsValidationError{}
+var _ error = ProductVersionsValidationError{}
 
 var _ interface {
 	Field() string
@@ -177,15 +177,15 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = SimpleVersionsValidationError{}
+} = ProductVersionsValidationError{}
 
-var _SimpleVersions_Kube_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+var _ProductVersions_Kube_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
 
-var _SimpleVersions_KoorOperator_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+var _ProductVersions_KoorOperator_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
 
-var _SimpleVersions_Ksd_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+var _ProductVersions_Ksd_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
 
-var _SimpleVersions_Ceph_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+var _ProductVersions_Ceph_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
 
 // Validate checks the field values on OperatorRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -316,315 +316,181 @@ var _ interface {
 	ErrorName() string
 } = OperatorRequestValidationError{}
 
-// Validate checks the field values on ImageVersion with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *ImageVersion) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ImageVersion with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in ImageVersionMultiError, or
-// nil if none found.
-func (m *ImageVersion) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *ImageVersion) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if !_ImageVersion_Version_Pattern.MatchString(m.GetVersion()) {
-		err := ImageVersionValidationError{
-			field:  "Version",
-			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if uri, err := url.Parse(m.GetImage()); err != nil {
-		err = ImageVersionValidationError{
-			field:  "Image",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	} else if !uri.IsAbs() {
-		err := ImageVersionValidationError{
-			field:  "Image",
-			reason: "value must be absolute",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	// no validation rules for Hash
-
-	if len(errors) > 0 {
-		return ImageVersionMultiError(errors)
-	}
-
-	return nil
-}
-
-// ImageVersionMultiError is an error wrapping multiple validation errors
-// returned by ImageVersion.ValidateAll() if the designated constraints aren't met.
-type ImageVersionMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m ImageVersionMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m ImageVersionMultiError) AllErrors() []error { return m }
-
-// ImageVersionValidationError is the validation error returned by
-// ImageVersion.Validate if the designated constraints aren't met.
-type ImageVersionValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ImageVersionValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ImageVersionValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ImageVersionValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ImageVersionValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ImageVersionValidationError) ErrorName() string { return "ImageVersionValidationError" }
-
-// Error satisfies the builtin error interface
-func (e ImageVersionValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sImageVersion.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ImageVersionValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ImageVersionValidationError{}
-
-var _ImageVersion_Version_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
-
-// Validate checks the field values on HelmVersion with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *HelmVersion) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on HelmVersion with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in HelmVersionMultiError, or
-// nil if none found.
-func (m *HelmVersion) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *HelmVersion) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if !_HelmVersion_Version_Pattern.MatchString(m.GetVersion()) {
-		err := HelmVersionValidationError{
-			field:  "Version",
-			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if uri, err := url.Parse(m.GetRepository()); err != nil {
-		err = HelmVersionValidationError{
-			field:  "Repository",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	} else if !uri.IsAbs() {
-		err := HelmVersionValidationError{
-			field:  "Repository",
-			reason: "value must be absolute",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	// no validation rules for Chart
-
-	if uri, err := url.Parse(m.GetImage()); err != nil {
-		err = HelmVersionValidationError{
-			field:  "Image",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	} else if !uri.IsAbs() {
-		err := HelmVersionValidationError{
-			field:  "Image",
-			reason: "value must be absolute",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	// no validation rules for Hash
-
-	if len(errors) > 0 {
-		return HelmVersionMultiError(errors)
-	}
-
-	return nil
-}
-
-// HelmVersionMultiError is an error wrapping multiple validation errors
-// returned by HelmVersion.ValidateAll() if the designated constraints aren't met.
-type HelmVersionMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m HelmVersionMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m HelmVersionMultiError) AllErrors() []error { return m }
-
-// HelmVersionValidationError is the validation error returned by
-// HelmVersion.Validate if the designated constraints aren't met.
-type HelmVersionValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e HelmVersionValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e HelmVersionValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e HelmVersionValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e HelmVersionValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e HelmVersionValidationError) ErrorName() string { return "HelmVersionValidationError" }
-
-// Error satisfies the builtin error interface
-func (e HelmVersionValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sHelmVersion.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = HelmVersionValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = HelmVersionValidationError{}
-
-var _HelmVersion_Version_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
-
-// Validate checks the field values on DetailedVersions with the rules defined
+// Validate checks the field values on DetailedVersion with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
-func (m *DetailedVersions) Validate() error {
+func (m *DetailedVersion) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on DetailedVersions with the rules
+// ValidateAll checks the field values on DetailedVersion with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// DetailedVersionsMultiError, or nil if none found.
-func (m *DetailedVersions) ValidateAll() error {
+// DetailedVersionMultiError, or nil if none found.
+func (m *DetailedVersion) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *DetailedVersions) validate(all bool) error {
+func (m *DetailedVersion) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if !_DetailedVersion_Version_Pattern.MatchString(m.GetVersion()) {
+		err := DetailedVersionValidationError{
+			field:  "Version",
+			reason: "value does not match regex pattern \"^v?\\\\d+(?:\\\\.\\\\d+){0,2}(?:\\\\-\\\\d+)?$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if uri, err := url.Parse(m.GetImageUri()); err != nil {
+		err = DetailedVersionValidationError{
+			field:  "ImageUri",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := DetailedVersionValidationError{
+			field:  "ImageUri",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for ImageHash
+
+	if uri, err := url.Parse(m.GetHelmRepository()); err != nil {
+		err = DetailedVersionValidationError{
+			field:  "HelmRepository",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := DetailedVersionValidationError{
+			field:  "HelmRepository",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for HelmChart
+
+	if len(errors) > 0 {
+		return DetailedVersionMultiError(errors)
+	}
+
+	return nil
+}
+
+// DetailedVersionMultiError is an error wrapping multiple validation errors
+// returned by DetailedVersion.ValidateAll() if the designated constraints
+// aren't met.
+type DetailedVersionMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DetailedVersionMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DetailedVersionMultiError) AllErrors() []error { return m }
+
+// DetailedVersionValidationError is the validation error returned by
+// DetailedVersion.Validate if the designated constraints aren't met.
+type DetailedVersionValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DetailedVersionValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DetailedVersionValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DetailedVersionValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DetailedVersionValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DetailedVersionValidationError) ErrorName() string { return "DetailedVersionValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DetailedVersionValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDetailedVersion.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DetailedVersionValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DetailedVersionValidationError{}
+
+var _DetailedVersion_Version_Pattern = regexp.MustCompile("^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$")
+
+// Validate checks the field values on DetailedProductVersions with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DetailedProductVersions) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DetailedProductVersions with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DetailedProductVersionsMultiError, or nil if none found.
+func (m *DetailedProductVersions) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DetailedProductVersions) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -635,7 +501,7 @@ func (m *DetailedVersions) validate(all bool) error {
 		switch v := interface{}(m.GetKoorOperator()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, DetailedVersionsValidationError{
+				errors = append(errors, DetailedProductVersionsValidationError{
 					field:  "KoorOperator",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -643,7 +509,7 @@ func (m *DetailedVersions) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, DetailedVersionsValidationError{
+				errors = append(errors, DetailedProductVersionsValidationError{
 					field:  "KoorOperator",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -652,7 +518,7 @@ func (m *DetailedVersions) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetKoorOperator()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DetailedVersionsValidationError{
+			return DetailedProductVersionsValidationError{
 				field:  "KoorOperator",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -664,7 +530,7 @@ func (m *DetailedVersions) validate(all bool) error {
 		switch v := interface{}(m.GetKsd()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, DetailedVersionsValidationError{
+				errors = append(errors, DetailedProductVersionsValidationError{
 					field:  "Ksd",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -672,7 +538,7 @@ func (m *DetailedVersions) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, DetailedVersionsValidationError{
+				errors = append(errors, DetailedProductVersionsValidationError{
 					field:  "Ksd",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -681,7 +547,7 @@ func (m *DetailedVersions) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetKsd()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DetailedVersionsValidationError{
+			return DetailedProductVersionsValidationError{
 				field:  "Ksd",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -693,7 +559,7 @@ func (m *DetailedVersions) validate(all bool) error {
 		switch v := interface{}(m.GetCeph()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, DetailedVersionsValidationError{
+				errors = append(errors, DetailedProductVersionsValidationError{
 					field:  "Ceph",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -701,7 +567,7 @@ func (m *DetailedVersions) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, DetailedVersionsValidationError{
+				errors = append(errors, DetailedProductVersionsValidationError{
 					field:  "Ceph",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -710,7 +576,7 @@ func (m *DetailedVersions) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetCeph()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DetailedVersionsValidationError{
+			return DetailedProductVersionsValidationError{
 				field:  "Ceph",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -719,19 +585,19 @@ func (m *DetailedVersions) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return DetailedVersionsMultiError(errors)
+		return DetailedProductVersionsMultiError(errors)
 	}
 
 	return nil
 }
 
-// DetailedVersionsMultiError is an error wrapping multiple validation errors
-// returned by DetailedVersions.ValidateAll() if the designated constraints
-// aren't met.
-type DetailedVersionsMultiError []error
+// DetailedProductVersionsMultiError is an error wrapping multiple validation
+// errors returned by DetailedProductVersions.ValidateAll() if the designated
+// constraints aren't met.
+type DetailedProductVersionsMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m DetailedVersionsMultiError) Error() string {
+func (m DetailedProductVersionsMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -740,11 +606,11 @@ func (m DetailedVersionsMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m DetailedVersionsMultiError) AllErrors() []error { return m }
+func (m DetailedProductVersionsMultiError) AllErrors() []error { return m }
 
-// DetailedVersionsValidationError is the validation error returned by
-// DetailedVersions.Validate if the designated constraints aren't met.
-type DetailedVersionsValidationError struct {
+// DetailedProductVersionsValidationError is the validation error returned by
+// DetailedProductVersions.Validate if the designated constraints aren't met.
+type DetailedProductVersionsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -752,22 +618,24 @@ type DetailedVersionsValidationError struct {
 }
 
 // Field function returns field value.
-func (e DetailedVersionsValidationError) Field() string { return e.field }
+func (e DetailedProductVersionsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DetailedVersionsValidationError) Reason() string { return e.reason }
+func (e DetailedProductVersionsValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DetailedVersionsValidationError) Cause() error { return e.cause }
+func (e DetailedProductVersionsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DetailedVersionsValidationError) Key() bool { return e.key }
+func (e DetailedProductVersionsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DetailedVersionsValidationError) ErrorName() string { return "DetailedVersionsValidationError" }
+func (e DetailedProductVersionsValidationError) ErrorName() string {
+	return "DetailedProductVersionsValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e DetailedVersionsValidationError) Error() string {
+func (e DetailedProductVersionsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -779,14 +647,14 @@ func (e DetailedVersionsValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDetailedVersions.%s: %s%s",
+		"invalid %sDetailedProductVersions.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DetailedVersionsValidationError{}
+var _ error = DetailedProductVersionsValidationError{}
 
 var _ interface {
 	Field() string
@@ -794,7 +662,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DetailedVersionsValidationError{}
+} = DetailedProductVersionsValidationError{}
 
 // Validate checks the field values on OperatorResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the

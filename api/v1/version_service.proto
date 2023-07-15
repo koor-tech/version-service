@@ -25,8 +25,8 @@ service VersionService {
   rpc Operator(OperatorRequest) returns (OperatorResponse) {}
 }
 
-// SimpleVersions describes a map of products with version strings
-message SimpleVersions {
+// ProductVersions describes a map of products with version strings
+message ProductVersions {
   string kube = 1 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
   string koor_operator = 2 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
   string ksd = 3 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
@@ -34,39 +34,32 @@ message SimpleVersions {
 }
 
 message OperatorRequest {
-  SimpleVersions versions = 1;
+  ProductVersions versions = 1;
 }
 
-// ImageVersion defines a version of a product with a container image
-message ImageVersion {
+// DetailedVersion defines a version of a product with a container image or helm chart
+message DetailedVersion {
   string version = 1 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
-  string image = 2 [(validate.rules).string.uri = true];
-  string hash = 3;
+  string image_uri = 2 [(validate.rules).string.uri = true];
+  string image_hash = 3;
+  string helm_repository = 4 [(validate.rules).string.uri = true];
+  string helm_chart = 5;
 }
 
-// HelmVersion defines a version of a product with a helm chart version
-message HelmVersion {
-  string version = 1 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
-  string repository = 2 [(validate.rules).string.uri = true];
-  string chart = 3;
-  string image = 4 [(validate.rules).string.uri = true];
-  string hash = 5;
-}
-
-// DetailedVersions describes a map of products with images or helm chart versions
-message DetailedVersions {
-  HelmVersion koor_operator = 1;
-  HelmVersion ksd = 2;
-  ImageVersion ceph = 3;
+// DetailedProductVersions describes a map of products with images or helm charts
+message DetailedProductVersions {
+  DetailedVersion koor_operator = 1;
+  DetailedVersion ksd = 2;
+  DetailedVersion ceph = 3;
 }
 
 message OperatorResponse {
-  DetailedVersions versions = 1;
+  DetailedProductVersions versions = 1;
 }
 
 // VersionMatrix describes a map of products with all possible images or helm chart versions
 message VersionMatrix {
-  map<string, HelmVersion> koor_operator = 1;
-  map<string, HelmVersion> ksd = 2;
-  map<string, ImageVersion> ceph = 3;
+  map<string, DetailedVersion> koor_operator = 1;
+  map<string, DetailedVersion> ksd = 2;
+  map<string, DetailedVersion> ceph = 3;
 }
