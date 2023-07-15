@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"log"
 	"sort"
+	"strings"
 
 	semver "github.com/Masterminds/semver/v3"
 	"github.com/bufbuild/connect-go"
@@ -46,7 +47,8 @@ func (s *VersionServer) Operator(
 }
 
 func getLatestVersions(opreq *apiv1.OperatorRequest) (*apiv1.DetailedProductVersions, error) {
-	vm, err := getVersionMatrix(opreq.Versions.KoorOperator)
+	kov := strings.TrimPrefix(opreq.Versions.KoorOperator, "v")
+	vm, err := getVersionMatrix(kov)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeNotFound, err)
 	}

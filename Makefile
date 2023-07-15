@@ -44,6 +44,10 @@ vet: ## Run go vet against code.
 build: generate fmt vet ## Build server binary.
 	go build -o bin/server main.go
 
+.PHONY: run
+run: generate fmt vet ## Run a server from your host.
+	go run ./main.go
+
 ##@ Build Dependencies
 
 ## Location to install dependencies to

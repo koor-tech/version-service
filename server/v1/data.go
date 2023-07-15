@@ -44,7 +44,7 @@ func init() {
 }
 
 func getVersionMatrix(koorOperatorVersion string) (*apiv1.VersionMatrix, error) {
-	filename := fmt.Sprintf("koor-operator-%s.json", koorOperatorVersion)
+	filename := fmt.Sprintf("koor-operator-v%s.json", koorOperatorVersion)
 	contents, ok := data[filename]
 	if !ok {
 		return nil, fmt.Errorf("data file not found: %s", filename)
