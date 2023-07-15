@@ -18,19 +18,31 @@ all: build
 help: ## Display this help.
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-##@ Build
+##@ Development
 
-.PHONY: build
-build: buf
+.PHONY: generate
+generate: buf
 	$(BUF) build
 	$(BUF) generate
-
-##@ Development
 
 .PHONY: lint
 lint: buf
 	$(BUF) lint
 	$(BUF) breaking --against '.git#branch=main'
+
+.PHONY: fmt
+fmt: ## Run go fmt against code.
+	go fmt ./...
+
+.PHONY: vet
+vet: ## Run go vet against code.
+	go vet ./...
+
+##@ Build
+
+.PHONY: build
+build: generate fmt vet ## Build server binary.
+	go build -o bin/server main.go
 
 ##@ Build Dependencies
 
