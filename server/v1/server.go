@@ -98,7 +98,7 @@ func findLatestVersion(versions map[string]*apiv1.DetailedVersion, current strin
 	sort.Sort(sort.Reverse(semver.Collection(semvers)))
 
 	if currentSemver.GreaterThan(semvers[0]) {
-		return nil, connect.NewError(connect.CodeInternal,
+		return nil, connect.NewError(connect.CodeNotFound,
 			fmt.Errorf("current version (%s) is bigger than latest known version (%s)", current, semvers[0]))
 	}
 
