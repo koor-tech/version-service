@@ -19,7 +19,7 @@ package api.v1;
 
 import "validate/validate.proto";
 
-option go_package = "github.com/koor-tech/version-service/api/v1;apiv1";
+option go_package = "github.com/koor-tech/version-service/api/v1";
 
 service VersionService {
   rpc Operator(OperatorRequest) returns (OperatorResponse) {}
