@@ -25,35 +25,41 @@ service VersionService {
   rpc Operator(OperatorRequest) returns (OperatorResponse) {}
 }
 
-message CurrentVersions {
-  string kube = 1;
-  string koor_operator = 2;
-  string ksd = 3;
-  string ceph = 4;
+// ProductVersions describes a map of products with version strings
+message ProductVersions {
+  string kube = 1 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
+  string koor_operator = 2 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
+  string ksd = 3 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
+  string ceph = 4 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
 }
 
 message OperatorRequest {
-  CurrentVersions current_versions = 1;
+  ProductVersions versions = 1;
 }
 
-message ImageVersion {
-  string version = 1;
-  string image = 2 [(validate.rules).string.uri = true];
-  string hash = 3;
+// DetailedVersion defines a version of a product with a container image or helm chart
+message DetailedVersion {
+  string version = 1 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
+  string image_uri = 2 [(validate.rules).string.uri = true];
+  string image_hash = 3;
+  string helm_repository = 4 [(validate.rules).string.uri = true];
+  string helm_chart = 5;
 }
 
-message HelmVersion {
-  string version = 1;
-  string repository = 2 [(validate.rules).string.uri = true];
-  string chart = 3;
-}
-
-message LatestVersions {
-  HelmVersion koor_operator = 1;
-  HelmVersion ksd = 2;
-  ImageVersion ceph = 3;
+// DetailedProductVersions describes a map of products with images or helm charts
+message DetailedProductVersions {
+  DetailedVersion koor_operator = 1;
+  DetailedVersion ksd = 2;
+  DetailedVersion ceph = 3;
 }
 
 message OperatorResponse {
-  LatestVersions latest_versions = 1;
+  DetailedProductVersions versions = 1;
+}
+
+// VersionMatrix describes a map of products with all possible images or helm chart versions
+message VersionMatrix {
+  map<string, DetailedVersion> koor_operator = 1;
+  map<string, DetailedVersion> ksd = 2;
+  map<string, DetailedVersion> ceph = 3;
 }
