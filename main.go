@@ -32,7 +32,7 @@ func main() {
 	path, handler := apiv1connect.NewVersionServiceHandler(vs)
 	mux.Handle(path, handler)
 	http.ListenAndServe(
-		"localhost:8080",
+		"localhost:8082",
 		// Use h2c so we can serve HTTP/2 without TLS.
 		h2c.NewHandler(mux, &http2.Server{}),
 	)

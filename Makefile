@@ -46,6 +46,7 @@ build: generate fmt vet ## Build server binary.
 
 .PHONY: run
 run: generate fmt vet ## Run a server from your host.
+	@echo "Listening on http://localhost:8082"
 	go run ./main.go
 
 ##@ Build Dependencies
