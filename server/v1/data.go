@@ -18,41 +18,22 @@ package serverv1
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"path"
 
 	"google.golang.org/protobuf/encoding/protojson"
 
 	apiv1 "github.com/koor-tech/version-service/api/v1"
+	"github.com/koor-tech/version-service/data"
 )
-
-var data = map[string][]byte{}
-
-func init() {
-	files, err := os.ReadDir("./data")
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, file := range files {
-		name := file.Name()
-		content, err := os.ReadFile(path.Join("./data", name))
-		if err != nil {
-			log.Fatalf("failed to read data file: %v", err)
-		}
-		data[name] = content
-	}
-}
 
 func getVersionMatrix(koorOperatorVersion string) (*apiv1.VersionMatrix, error) {
 	filename := fmt.Sprintf("koor-operator-v%s.json", koorOperatorVersion)
-	contents, ok := data[filename]
-	if !ok {
+	contents, err := data.Data.ReadFile(filename)
+	if err != nil {
 		return nil, fmt.Errorf("data file not found: %s", filename)
 	}
 
 	vm := &apiv1.VersionMatrix{}
-	err := protojson.Unmarshal(contents, vm)
+	err = protojson.Unmarshal(contents, vm)
 	if err != nil {
 		return nil, fmt.Errorf("failed to unmarshal data file: %s , err: %v", filename, err)
 	}
