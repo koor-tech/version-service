@@ -70,6 +70,10 @@ docker-build: ## Build docker image with the version service.
 docker-push: ## Push docker image with the version service.
 	docker push ${IMG}
 
+.PHONY: docker-run-it
+docker-run-it: docker-build ## Run docker image
+	docker run -it --rm -p 8082:8082 ${IMG}
+
 ##@ Build Dependencies
 
 ## Location to install dependencies to
