@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: koor-version-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: koor-version-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: koor-version-service
+    spec:
+      containers:
+      - image: koorinc/version-service:master-8ac1b21
+        imagePullPolicy: Always
+        name: koor-version-service
+        ports:
+        - containerPort: 8082
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: koor-version-service
+  name: koor-version-service
+spec:
+  ports:
+  - port: 8082
+    protocol: TCP
+    targetPort: 8082
+  selector:
+    name: koor-version-service
+  type: ClusterIP
