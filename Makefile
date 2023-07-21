@@ -1,3 +1,13 @@
+# Version is derived from tags
+VERSION ?= $(shell git describe --dirty --always --tags | sed 's/-/./2' | sed 's/-/./2')
+
+# REGISTRY_HOST defines the registry and organization used to publish the images.
+# Use localhost:5000 for the local registry
+REGISTRY_HOST ?= docker.io/koorinc
+
+# Image URL to use for all building/pushing image targets
+IMG ?= $(REGISTRY_HOST)/version-service:$(VERSION)
+
 .PHONY: all
 all: build
 
@@ -48,6 +58,17 @@ build: generate fmt vet ## Build server binary.
 run: generate fmt vet ## Run a server from your host.
 	@echo "Listening on http://localhost:8082"
 	go run ./main.go
+
+# If you wish to build the version service image targeting other platforms you can use the --platform flag.
+# (i.e. docker build --platform linux/arm64 ). However, you must enable docker buildKit for it.
+# More info: https://docs.docker.com/develop/develop-images/build_enhancements/
+.PHONY: docker-build
+docker-build: ## Build docker image with the version service.
+	docker build -t ${IMG} .
+
+.PHONY: docker-push
+docker-push: ## Push docker image with the version service.
+	docker push ${IMG}
 
 ##@ Build Dependencies
 
