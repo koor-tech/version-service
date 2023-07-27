@@ -7,10 +7,10 @@
         }
     },
     "ksd": {
-        "1.11.3": {
-            "version": "1.11.3",
-            "image_uri": "koorinc/ceph:v1.11.3",
-            "image_hash": "93986cfa4bdf99ef55daa57ceb5a0ccbfa460e6edd14504ebb8897936b76564a",
+        "1.12.0": {
+            "version": "1.12.0",
+            "image_uri": "koorinc/ceph:v1.12.0",
+            "image_hash": "d3d38ae93d268290bbf99545b90addaa6f51c3d1f383ef5f2ab6cb65f2cf243e",
             "helm_repository": "https://charts.koor.tech/release",
             "helm_chart":"rook-ceph"
         }
