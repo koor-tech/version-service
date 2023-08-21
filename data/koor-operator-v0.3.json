@@ -1,7 +1,9 @@
 {
     "koor_operator": {
-        "0.3.0": {
-            "version": "0.3.0",
+        "0.3.4": {
+            "version": "0.3.4",
+            "image_uri": "koorinc/koor-operator:v0.3.4",
+            "image_hash": "76f242cddaccc3f8b88860a03735518079bcc098bd03d447ab0f04dc9123e95a",
             "helm_repository": "https://koor-tech.github.io/koor-operator",
             "helm_chart":"koor-operator"
         }

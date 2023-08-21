@@ -21,12 +21,17 @@ import (
 	"fmt"
 	"log"
 	"sort"
-	"strings"
 
 	semver "github.com/Masterminds/semver/v3"
 	"github.com/bufbuild/connect-go"
 
 	apiv1 "github.com/koor-tech/version-service/api/v1"
+)
+
+const (
+	KoorOperatorModule = "Koor Operator"
+	KsdModule          = "KSD"
+	CephModule         = "Ceph"
 )
 
 type VersionServer struct{}
@@ -48,22 +53,21 @@ func (s *VersionServer) Operator(
 }
 
 func getLatestVersions(opreq *apiv1.OperatorRequest) (*apiv1.DetailedProductVersions, error) {
-	kov := strings.TrimPrefix(opreq.Versions.KoorOperator, "v")
-	vm, err := getVersionMatrix(kov)
+	vm, err := getVersionMatrix(opreq.Versions.KoorOperator)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeNotFound, err)
 	}
-	latestKoorOperator, err := findLatestVersion(vm.KoorOperator, opreq.Versions.KoorOperator)
+	latestKoorOperator, err := findLatestVersion(KoorOperatorModule, vm.KoorOperator, opreq.Versions.KoorOperator)
 	if err != nil {
 		return nil, err
 	}
 
-	latestKsd, err := findLatestVersion(vm.Ksd, opreq.Versions.Ksd)
+	latestKsd, err := findLatestVersion(KsdModule, vm.Ksd, opreq.Versions.Ksd)
 	if err != nil {
 		return nil, err
 	}
 
-	latestCeph, err := findLatestVersion(vm.Ceph, opreq.Versions.Ceph)
+	latestCeph, err := findLatestVersion(CephModule, vm.Ceph, opreq.Versions.Ceph)
 	if err != nil {
 		return nil, err
 	}
@@ -77,21 +81,21 @@ func getLatestVersions(opreq *apiv1.OperatorRequest) (*apiv1.DetailedProductVers
 	return latest, nil
 }
 
-func findLatestVersion(versions map[string]*apiv1.DetailedVersion, current string) (*apiv1.DetailedVersion, error) {
+func findLatestVersion(module string, versions map[string]*apiv1.DetailedVersion, current string) (*apiv1.DetailedVersion, error) {
 	if len(versions) == 0 {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("could not find latest versions, current: %s", current))
+		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("could not find latest versions for %s, current: %s", module, current))
 	}
 
 	currentSemver, err := semver.NewVersion(current)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid version: %s", current))
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid version for %s: %s", module, current))
 	}
 
 	semvers := make([]*semver.Version, 0, len(versions))
 	for k := range versions {
 		sv, err := semver.NewVersion(k)
 		if err != nil {
-			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("could not parse version: %s", k))
+			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("could not parse version for %s: %s", module, k))
 		}
 		semvers = append(semvers, sv)
 	}
@@ -100,7 +104,7 @@ func findLatestVersion(versions map[string]*apiv1.DetailedVersion, current strin
 
 	if currentSemver.GreaterThan(semvers[0]) {
 		return nil, connect.NewError(connect.CodeNotFound,
-			fmt.Errorf("current version (%s) is bigger than latest known version (%s)", current, semvers[0]))
+			fmt.Errorf("current version for %s (%s) is bigger than latest known version (%s)", module, current, semvers[0]))
 	}
 
 	latest := semvers[0].String()

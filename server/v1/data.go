@@ -19,6 +19,7 @@ package serverv1
 import (
 	"fmt"
 
+	semver "github.com/Masterminds/semver/v3"
 	"google.golang.org/protobuf/encoding/protojson"
 
 	apiv1 "github.com/koor-tech/version-service/api/v1"
@@ -26,7 +27,12 @@ import (
 )
 
 func getVersionMatrix(koorOperatorVersion string) (*apiv1.VersionMatrix, error) {
-	filename := fmt.Sprintf("koor-operator-v%s.json", koorOperatorVersion)
+	sv, err := semver.NewVersion(koorOperatorVersion)
+	if err != nil {
+		return nil, fmt.Errorf("invalid koor operator version: %s", koorOperatorVersion)
+	}
+
+	filename := fmt.Sprintf("koor-operator-v%d.%d.json", sv.Major(), sv.Minor())
 	contents, err := data.Data.ReadFile(filename)
 	if err != nil {
 		return nil, fmt.Errorf("data file not found: %s", filename)
