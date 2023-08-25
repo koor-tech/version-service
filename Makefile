@@ -52,7 +52,7 @@ vet: ## Run go vet against code.
 local-certs: certs/cert.pem ## generate local certs
 
 certs/cert.pem:
-	mkcert -cert-file=certs/cert.pem -key-file=certs/key.pem localhost
+	mkcert -install -cert-file=certs/cert.pem -key-file=certs/key.pem localhost
 
 ##@ Build
 
