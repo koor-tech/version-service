@@ -18,6 +18,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -31,9 +32,25 @@ func main() {
 	mux := http.NewServeMux()
 	path, handler := apiv1connect.NewVersionServiceHandler(vs)
 	mux.Handle(path, handler)
-	http.ListenAndServe(
-		":8082",
-		// Use h2c so we can serve HTTP/2 without TLS.
-		h2c.NewHandler(mux, &http2.Server{}),
-	)
+
+	connectPort := os.Getenv("CONNECT_PORT")
+	if connectPort == "" {
+		connectPort = "8082"
+	}
+
+	useTLS := os.Getenv("NO_TLS") != "true"
+	if useTLS {
+		http.ListenAndServeTLS(
+			":"+connectPort,
+			"certs/cert.pem",
+			"certs/key.pem",
+			mux,
+		)
+	} else {
+		http.ListenAndServe(
+			":"+connectPort,
+			// Use h2c so we can serve HTTP/2 without TLS.
+			h2c.NewHandler(mux, &http2.Server{}),
+		)
+	}
 }

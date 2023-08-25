@@ -1,5 +1,5 @@
 # Version is derived from tags
-VERSION ?= $(shell git describe --dirty --always --tags | sed 's/-/./2' | sed 's/-/./2')
+VERSION ?= $(shell git describe --dirty --always --tags)
 
 # REGISTRY_HOST defines the registry and organization used to publish the images.
 # Use localhost:5000 for the local registry
@@ -48,6 +48,12 @@ fmt: ## Run go fmt against code.
 vet: ## Run go vet against code.
 	go vet ./...
 
+.PHONY: local-certs
+local-certs: certs/cert.pem ## generate local certs
+
+certs/cert.pem:
+	mkcert -install -cert-file=certs/cert.pem -key-file=certs/key.pem localhost
+
 ##@ Build
 
 .PHONY: build
@@ -57,6 +63,11 @@ build: generate fmt vet ## Build server binary.
 .PHONY: run
 run: generate fmt vet ## Run a server from your host.
 	@echo "Listening on http://localhost:8082"
+	NO_TLS=true go run ./main.go
+
+.PHONY: run-tls
+run-tls: generate fmt vet local-certs ## Run a server from your host.
+	@echo "Listening on https://localhost:8082"
 	go run ./main.go
 
 # If you wish to build the version service image targeting other platforms you can use the --platform flag.
@@ -72,7 +83,7 @@ docker-push: ## Push docker image with the version service.
 
 .PHONY: docker-run-it
 docker-run-it: docker-build ## Run docker image
-	docker run -it --rm -p 8082:8082 ${IMG}
+	docker run -it --rm -p 8082:8082 -e NO_TLS=true ${IMG}
 
 ##@ Build Dependencies
 

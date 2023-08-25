@@ -18,12 +18,15 @@ spec:
         name: koor-version-service
     spec:
       containers:
-      - image: koorinc/version-service:master-8ac1b21
+      - image: koorinc/version-service:main
         imagePullPolicy: Always
         name: koor-version-service
         ports:
         - containerPort: 8082
           protocol: TCP
+        env:
+        - name: NO_TLS
+          value: "true"
 ---
 apiVersion: v1
 kind: Service
@@ -33,7 +36,7 @@ metadata:
   name: koor-version-service
 spec:
   ports:
-  - port: 8082
+  - port: 80
     protocol: TCP
     targetPort: 8082
   selector:
