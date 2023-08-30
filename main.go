@@ -33,6 +33,10 @@ func main() {
 	path, handler := apiv1connect.NewVersionServiceHandler(vs)
 	mux.Handle(path, handler)
 
+	// serve generated docs
+	fs := http.FileServer(http.Dir("./public"))
+	mux.Handle("/", fs)
+
 	connectPort := os.Getenv("CONNECT_PORT")
 	if connectPort == "" {
 		connectPort = "8082"

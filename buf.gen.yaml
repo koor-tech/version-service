@@ -16,3 +16,9 @@ plugins:
   - plugin: buf.build/bufbuild/validate-go:v1.0.2
     out: .
     opt: paths=source_relative
+  - plugin: buf.build/community/pseudomuto-doc:v1.5.1
+    out: .
+    opt: markdown,docs.md
+  - plugin: buf.build/community/pseudomuto-doc:v1.5.1
+    out: public
+    opt: html,index.html
