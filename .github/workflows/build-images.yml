@@ -70,7 +70,6 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.SSH_KEY }}
-          fingerprint: ${{ secrets.DEPLOY_FINGERPRINT }}
           envs: SHA
           script: |
             docker rm vs --force
