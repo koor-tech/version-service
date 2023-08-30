@@ -29,7 +29,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=raw,value=latest,enable={{is_default_branch}}
-            type=sha,prefix={{branch}}-,enable={{is_default_branch}}
+            type=sha,format=long,prefix={{branch}}-,enable={{is_default_branch}}
             type=semver,pattern=v{{version}}
             type=semver,pattern=v{{major}}.{{minor}}
             type=semver,pattern=v{{major}}
@@ -60,4 +60,19 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           generate_release_notes: true
-          draft: true
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.0.0
+        if: github.ref == 'refs/heads/main'
+        env:
+          SHA: ${{ github.sha }}
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          fingerprint: ${{ secrets.DEPLOY_FINGERPRINT }}
+          envs: SHA
+          script: |
+            docker rm vs --force
+            docker run --label version-service --name vs -d -p 443:8082 --volume=/root/certs:/certs koorinc/version-service:main-$SHA
+
