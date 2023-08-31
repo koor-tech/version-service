@@ -233,11 +233,11 @@
       <div class="file-heading">
         <h2 id="api/v1/version_service.proto">api/v1/version_service.proto</h2><a href="#title">Top</a>
       </div>
-      <p>Copyright 2023 Koor Technologies, Inc. All rights reserved.</p><p>Licensed under the Apache License, Version 2.0 (the "License");</p><p>you may not use this file except in compliance with the License.</p><p>You may obtain a copy of the License at</p><p>http://www.apache.org/licenses/LICENSE-2.0</p><p>Unless required by applicable law or agreed to in writing, software</p><p>distributed under the License is distributed on an "AS IS" BASIS,</p><p>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p><p>See the License for the specific language governing permissions and</p><p>limitations under the License.</p>
+      <p>Koor Version Service</p><p>This defines the messages and services of the Koor Version Service, which is used to retreive information about product and dependency versions.</p>
 
       
         <h3 id="api.v1.DetailedProductVersions">DetailedProductVersions</h3>
-        <p>DetailedProductVersions describes a map of products with images or helm charts</p>
+        <p>Represents a map of products to detailed versions, which include images or helm charts.</p>
 
         
           <table class="field-table">
@@ -250,21 +250,21 @@
                   <td>koor_operator</td>
                   <td><a href="#api.v1.DetailedVersion">DetailedVersion</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The detailed Koor Operator version. </p></td>
                 </tr>
               
                 <tr>
                   <td>ksd</td>
                   <td><a href="#api.v1.DetailedVersion">DetailedVersion</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The detailed Koor Storage Distribution version. </p></td>
                 </tr>
               
                 <tr>
                   <td>ceph</td>
                   <td><a href="#api.v1.DetailedVersion">DetailedVersion</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The detailed Ceph version. </p></td>
                 </tr>
               
             </tbody>
@@ -275,7 +275,7 @@
         
       
         <h3 id="api.v1.DetailedVersion">DetailedVersion</h3>
-        <p>DetailedVersion defines a version of a product with a container image or helm chart</p>
+        <p>Defines a detailed version of a product, which includes a container image or a helm chart.</p>
 
         
           <table class="field-table">
@@ -288,35 +288,35 @@
                   <td>version</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The product version, must be a valid semver. </p></td>
                 </tr>
               
                 <tr>
                   <td>image_uri</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The URI of the container image. </p></td>
                 </tr>
               
                 <tr>
                   <td>image_hash</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The hash of the container image. </p></td>
                 </tr>
               
                 <tr>
                   <td>helm_repository</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The URI of the helm repository. </p></td>
                 </tr>
               
                 <tr>
                   <td>helm_chart</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>The name of the helm chart in the repository. </p></td>
                 </tr>
               
             </tbody>
@@ -376,7 +376,7 @@
         
       
         <h3 id="api.v1.OperatorRequest">OperatorRequest</h3>
-        <p></p>
+        <p>Represents an operator request message.</p>
 
         
           <table class="field-table">
@@ -389,7 +389,7 @@
                   <td>versions</td>
                   <td><a href="#api.v1.ProductVersions">ProductVersions</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>A map of products to current versions. </p></td>
                 </tr>
               
             </tbody>
@@ -400,7 +400,7 @@
         
       
         <h3 id="api.v1.OperatorResponse">OperatorResponse</h3>
-        <p></p>
+        <p>Represents an operator response message.</p>
 
         
           <table class="field-table">
@@ -413,7 +413,7 @@
                   <td>versions</td>
                   <td><a href="#api.v1.DetailedProductVersions">DetailedProductVersions</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>A map of products to the newest available versions with deiails. </p></td>
                 </tr>
               
             </tbody>
@@ -424,7 +424,7 @@
         
       
         <h3 id="api.v1.ProductVersions">ProductVersions</h3>
-        <p>ProductVersions describes a map of products with version strings</p>
+        <p>Represents a map of products to version strings.</p>
 
         
           <table class="field-table">
@@ -437,28 +437,28 @@
                   <td>kube</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Kubernetes version, must be a valid semver. </p></td>
                 </tr>
               
                 <tr>
                   <td>koor_operator</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Koor Operator version, must be a valid semver. </p></td>
                 </tr>
               
                 <tr>
                   <td>ksd</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Koor Storage Distribution version, must be a valid semver. </p></td>
                 </tr>
               
                 <tr>
                   <td>ceph</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>Ceph version, must be a valid semver. </p></td>
                 </tr>
               
             </tbody>
@@ -529,7 +529,7 @@
         
       
         <h3 id="api.v1.VersionMatrix">VersionMatrix</h3>
-        <p>VersionMatrix describes a map of products with all possible images or helm chart versions</p>
+        <p>Represents a map of products with all available images or helm chart versions</p>
 
         
           <table class="field-table">
@@ -542,21 +542,21 @@
                   <td>koor_operator</td>
                   <td><a href="#api.v1.VersionMatrix.KoorOperatorEntry">VersionMatrix.KoorOperatorEntry</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>A map detailing the available Koor Operator versions. The keys are version strings and the values are version details. </p></td>
                 </tr>
               
                 <tr>
                   <td>ksd</td>
                   <td><a href="#api.v1.VersionMatrix.KsdEntry">VersionMatrix.KsdEntry</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>A map detailing the available Koor Storage Distribution versions. The keys are version strings and the values are version details. </p></td>
                 </tr>
               
                 <tr>
                   <td>ceph</td>
                   <td><a href="#api.v1.VersionMatrix.CephEntry">VersionMatrix.CephEntry</a></td>
                   <td>repeated</td>
-                  <td><p> </p></td>
+                  <td><p>A map detailing the available Ceph versions. The keys are version strings and the values are version details. </p></td>
                 </tr>
               
             </tbody>
@@ -666,7 +666,7 @@
 
       
         <h3 id="api.v1.VersionService">VersionService</h3>
-        <p></p>
+        <p>The main service of the Koor Version Service.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -677,7 +677,7 @@
                 <td>Operator</td>
                 <td><a href="#api.v1.OperatorRequest">OperatorRequest</a></td>
                 <td><a href="#api.v1.OperatorResponse">OperatorResponse</a></td>
-                <td><p></p></td>
+                <td><p>Used by the Koor operator to get the latest version of each depencency product based on the current product versions.</p></td>
               </tr>
             
           </tbody>

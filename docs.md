@@ -24,32 +24,22 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## api/v1/version_service.proto
-Copyright 2023 Koor Technologies, Inc. All rights reserved.
+Koor Version Service
 
-Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This defines the messages and services of the Koor Version Service, which is used to retreive information about product and dependency versions.
 
 
 <a name="api-v1-DetailedProductVersions"></a>
 
 ### DetailedProductVersions
-DetailedProductVersions describes a map of products with images or helm charts
+Represents a map of products to detailed versions, which include images or helm charts.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| koor_operator | [DetailedVersion](#api-v1-DetailedVersion) |  |  |
-| ksd | [DetailedVersion](#api-v1-DetailedVersion) |  |  |
-| ceph | [DetailedVersion](#api-v1-DetailedVersion) |  |  |
+| koor_operator | [DetailedVersion](#api-v1-DetailedVersion) |  | The detailed Koor Operator version. |
+| ksd | [DetailedVersion](#api-v1-DetailedVersion) |  | The detailed Koor Storage Distribution version. |
+| ceph | [DetailedVersion](#api-v1-DetailedVersion) |  | The detailed Ceph version. |
 
 
 
@@ -59,16 +49,16 @@ DetailedProductVersions describes a map of products with images or helm charts
 <a name="api-v1-DetailedVersion"></a>
 
 ### DetailedVersion
-DetailedVersion defines a version of a product with a container image or helm chart
+Defines a detailed version of a product, which includes a container image or a helm chart.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| version | [string](#string) |  |  |
-| image_uri | [string](#string) |  |  |
-| image_hash | [string](#string) |  |  |
-| helm_repository | [string](#string) |  |  |
-| helm_chart | [string](#string) |  |  |
+| version | [string](#string) |  | The product version, must be a valid semver. |
+| image_uri | [string](#string) |  | The URI of the container image. |
+| image_hash | [string](#string) |  | The hash of the container image. |
+| helm_repository | [string](#string) |  | The URI of the helm repository. |
+| helm_chart | [string](#string) |  | The name of the helm chart in the repository. |
 
 
 
@@ -78,12 +68,12 @@ DetailedVersion defines a version of a product with a container image or helm ch
 <a name="api-v1-OperatorRequest"></a>
 
 ### OperatorRequest
-
+Represents an operator request message.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| versions | [ProductVersions](#api-v1-ProductVersions) |  |  |
+| versions | [ProductVersions](#api-v1-ProductVersions) |  | A map of products to current versions. |
 
 
 
@@ -93,12 +83,12 @@ DetailedVersion defines a version of a product with a container image or helm ch
 <a name="api-v1-OperatorResponse"></a>
 
 ### OperatorResponse
-
+Represents an operator response message.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| versions | [DetailedProductVersions](#api-v1-DetailedProductVersions) |  |  |
+| versions | [DetailedProductVersions](#api-v1-DetailedProductVersions) |  | A map of products to the newest available versions with deiails. |
 
 
 
@@ -108,15 +98,15 @@ DetailedVersion defines a version of a product with a container image or helm ch
 <a name="api-v1-ProductVersions"></a>
 
 ### ProductVersions
-ProductVersions describes a map of products with version strings
+Represents a map of products to version strings.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| kube | [string](#string) |  |  |
-| koor_operator | [string](#string) |  |  |
-| ksd | [string](#string) |  |  |
-| ceph | [string](#string) |  |  |
+| kube | [string](#string) |  | Kubernetes version, must be a valid semver. |
+| koor_operator | [string](#string) |  | Koor Operator version, must be a valid semver. |
+| ksd | [string](#string) |  | Koor Storage Distribution version, must be a valid semver. |
+| ceph | [string](#string) |  | Ceph version, must be a valid semver. |
 
 
 
@@ -126,14 +116,14 @@ ProductVersions describes a map of products with version strings
 <a name="api-v1-VersionMatrix"></a>
 
 ### VersionMatrix
-VersionMatrix describes a map of products with all possible images or helm chart versions
+Represents a map of products with all available images or helm chart versions
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| koor_operator | [VersionMatrix.KoorOperatorEntry](#api-v1-VersionMatrix-KoorOperatorEntry) | repeated |  |
-| ksd | [VersionMatrix.KsdEntry](#api-v1-VersionMatrix-KsdEntry) | repeated |  |
-| ceph | [VersionMatrix.CephEntry](#api-v1-VersionMatrix-CephEntry) | repeated |  |
+| koor_operator | [VersionMatrix.KoorOperatorEntry](#api-v1-VersionMatrix-KoorOperatorEntry) | repeated | A map detailing the available Koor Operator versions. The keys are version strings and the values are version details. |
+| ksd | [VersionMatrix.KsdEntry](#api-v1-VersionMatrix-KsdEntry) | repeated | A map detailing the available Koor Storage Distribution versions. The keys are version strings and the values are version details. |
+| ceph | [VersionMatrix.CephEntry](#api-v1-VersionMatrix-CephEntry) | repeated | A map detailing the available Ceph versions. The keys are version strings and the values are version details. |
 
 
 
@@ -197,11 +187,11 @@ VersionMatrix describes a map of products with all possible images or helm chart
 <a name="api-v1-VersionService"></a>
 
 ### VersionService
-
+The main service of the Koor Version Service.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Operator | [OperatorRequest](#api-v1-OperatorRequest) | [OperatorResponse](#api-v1-OperatorResponse) |  |
+| Operator | [OperatorRequest](#api-v1-OperatorRequest) | [OperatorResponse](#api-v1-OperatorResponse) | Used by the Koor operator to get the latest version of each depencency product based on the current product versions. |
 
  
 
