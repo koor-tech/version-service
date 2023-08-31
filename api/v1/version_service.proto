@@ -1,18 +1,23 @@
 /*
-   Copyright 2023 Koor Technologies, Inc. All rights reserved.
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
+ * Copyright 2023 Koor Technologies, Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/*
+ * Koor Version Service
+ *
+ * This defines the messages and services of the Koor Version Service, which is used to retreive information about product and dependency versions.
+ */
 syntax = "proto3";
 
 package api.v1;
@@ -21,45 +26,72 @@ import "validate/validate.proto";
 
 option go_package = "github.com/koor-tech/version-service/api/v1";
 
+// The main service of the Koor Version Service.
 service VersionService {
+  // Used by the Koor operator to get the latest version of each depencency product based on the current product versions.
   rpc Operator(OperatorRequest) returns (OperatorResponse) {}
 }
 
-// ProductVersions describes a map of products with version strings
+// Represents a map of products to version strings.
 message ProductVersions {
+  // Kubernetes version, must be a valid semver.
   string kube = 1 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
+
+  // Koor Operator version, must be a valid semver.
   string koor_operator = 2 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
+
+  // Koor Storage Distribution version, must be a valid semver.
   string ksd = 3 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
+
+  // Ceph version, must be a valid semver.
   string ceph = 4 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
 }
 
+// Represents an operator request message.
 message OperatorRequest {
+  // A map of products to current versions.
   ProductVersions versions = 1;
 }
 
-// DetailedVersion defines a version of a product with a container image or helm chart
+// Defines a detailed version of a product, which includes a container image or a helm chart.
 message DetailedVersion {
+  // The product version, must be a valid semver.
   string version = 1 [(validate.rules).string.pattern = "^v?\\d+(?:\\.\\d+){0,2}(?:\\-\\d+)?$"];
+
+  // The URI of the container image.
   string image_uri = 2 [(validate.rules).string.uri = true];
+
+  // The hash of the container image.
   string image_hash = 3;
+
+  // The URI of the helm repository.
   string helm_repository = 4 [(validate.rules).string.uri = true];
+
+  // The name of the helm chart in the repository.
   string helm_chart = 5;
 }
 
-// DetailedProductVersions describes a map of products with images or helm charts
+// Represents a map of products to detailed versions, which include images or helm charts.
 message DetailedProductVersions {
-  DetailedVersion koor_operator = 1;
-  DetailedVersion ksd = 2;
-  DetailedVersion ceph = 3;
+  DetailedVersion koor_operator = 1; // The detailed Koor Operator version.
+  DetailedVersion ksd = 2; // The detailed Koor Storage Distribution version.
+  DetailedVersion ceph = 3; // The detailed Ceph version.
 }
 
+// Represents an operator response message.
 message OperatorResponse {
+  // A map of products to the newest available versions with deiails.
   DetailedProductVersions versions = 1;
 }
 
-// VersionMatrix describes a map of products with all possible images or helm chart versions
+// Represents a map of products with all available images or helm chart versions
 message VersionMatrix {
+  // A map detailing the available Koor Operator versions. The keys are version strings and the values are version details.
   map<string, DetailedVersion> koor_operator = 1;
+
+  // A map detailing the available Koor Storage Distribution versions. The keys are version strings and the values are version details.
   map<string, DetailedVersion> ksd = 2;
+
+  // A map detailing the available Ceph versions. The keys are version strings and the values are version details.
   map<string, DetailedVersion> ceph = 3;
 }
