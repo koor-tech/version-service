@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:recommended",
+    ":automergeMinor",
+  ],
+  regexManagers: [
+    {
+      customType: "regex",
+      fileMatch: ["^data/.*\\.json"],
+      "matchStrings": [
+        "\".*?\": \\{\
+\\s*\"version\": \"(?<currentValue>.*?)\",\
+\\s*\"image_uri\": \"(?<depName>.*?):.*?\",\
+\\s*\"image_hash\": \".*?\""
+      ],
+      autoReplaceStringTemplate: '"{{{newValue}}}": \\{\
+            "version": "{{{newValue}}}",\
+            "image_uri": "{{{depName}}}:{{{newValue}}}",\
+            "image_hash": "{{{newDigest}}}"',
+      datasourceTemplate: "docker",
+    }
+  ]
+}
