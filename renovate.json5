@@ -11,11 +11,13 @@
       "matchStrings": [
         '".*?": \\{\
 \\s*"version": "(?<currentValue>.*?)",\
-\\s*"image_uri": "(?<depName>koorinc/koor-operator?):.*?"'
+\\s*"image_uri": "(?<depName>koorinc/koor-operator?):.*?",\
+\\s*"image_hash": ".*?"'
       ],
-      autoReplaceStringTemplate: "\"{{{newValue}}}\": {\n\
-            \"version\": \"{{{newValue}}}\",\n\
-            \"image_uri\": \"{{{depName}}}:{{{newValue}}}\"",
+      autoReplaceStringTemplate: "\"{{{replace 'v' '' newValue}}}\": {\n\
+            \"version\": \"{{{replace 'v' '' newValue}}}\",\n\
+            \"image_uri\": \"{{{depName}}}:{{{newValue}}}\",\n\
+            \"image_hash\": \"{{{newDigest}}}\"",
       datasourceTemplate: "docker",
     },
     {
@@ -24,11 +26,13 @@
       "matchStrings": [
         '".*?": \\{\
 \\s*"version": "(?<currentValue>.*?)",\
-\\s*"image_uri": "(?<depName>koorinc/ceph?):.*?"'
+\\s*"image_uri": "(?<depName>koorinc/ceph?):.*?",\
+\\s*"image_hash": ".*?"'
       ],
-      autoReplaceStringTemplate: "\"{{{newValue}}}\": {\n\
-            \"version\": \"{{{newValue}}}\",\n\
-            \"image_uri\": \"{{{depName}}}:{{{newValue}}}\"",
+      autoReplaceStringTemplate: "\"{{{replace 'v' '' newValue}}}\": {\n\
+            \"version\": \"{{{replace 'v' '' newValue}}}\",\n\
+            \"image_uri\": \"{{{depName}}}:{{{newValue}}}\",\n\
+            \"image_hash\": \"{{{newDigest}}}\"",
       datasourceTemplate: "docker",
     },
   ],
