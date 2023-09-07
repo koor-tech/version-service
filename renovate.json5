@@ -10,8 +10,8 @@
       fileMatch: ["^data/.*\\.json"],
       "matchStrings": [
         '".*?": \\{\
-\\s*"version": "(?<currentValue>.*?)",\
-\\s*"image_uri": "(?<depName>koorinc/koor-operator?):.*?",\
+\\s*"version": ".*?",\
+\\s*"image_uri": "(?<depName>koorinc/koor-operator?):(?<currentValue>.*?)",\
 \\s*"image_hash": ".*?"'
       ],
       autoReplaceStringTemplate: "\"{{{replace 'v' '' newValue}}}\": {\n\
@@ -25,8 +25,8 @@
       fileMatch: ["^data/.*\\.json"],
       "matchStrings": [
         '".*?": \\{\
-\\s*"version": "(?<currentValue>.*?)",\
-\\s*"image_uri": "(?<depName>koorinc/ceph?):.*?",\
+\\s*"version": ".*?",\
+\\s*"image_uri": "(?<depName>koorinc/koor-operator?):(?<currentValue>.*?)",\
 \\s*"image_hash": ".*?"'
       ],
       autoReplaceStringTemplate: "\"{{{replace 'v' '' newValue}}}\": {\n\
