@@ -24,13 +24,11 @@
       "matchStrings": [
         '".*?": \\{\
 \\s*"version": "(?<currentValue>.*?)",\
-\\s*"image_uri": "(?<depName>koorinc/ceph?):.*?",\
-\\s*"image_hash": ".*?""
+\\s*"image_uri": "(?<depName>koorinc/ceph?):.*?"'
       ],
       autoReplaceStringTemplate: '"{{{newValue}}}": {\
             "version": "{{{newValue}}}",\
-            "image_uri": "{{{depName}}}:{{{newValue}}}",\
-            "image_hash": "{{{newDigest}}}"',
+            "image_uri": "{{{depName}}}:{{{newValue}}}"',
       datasourceTemplate: "docker",
     },
   ],
