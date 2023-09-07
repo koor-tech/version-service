@@ -26,7 +26,7 @@
       "matchStrings": [
         '".*?": \\{\
 \\s*"version": ".*?",\
-\\s*"image_uri": "(?<depName>koorinc/koor-operator?):(?<currentValue>.*?)",\
+\\s*"image_uri": "(?<depName>koorinc/ceph?):(?<currentValue>.*?)",\
 \\s*"image_hash": ".*?"'
       ],
       autoReplaceStringTemplate: "\"{{{replace 'v' '' newValue}}}\": {\n\
