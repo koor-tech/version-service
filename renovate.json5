@@ -9,27 +9,25 @@
       customType: "regex",
       fileMatch: ["^data/.*\\.json"],
       "matchStrings": [
-        "\".*?\": \\{\
-\\s*\"version\": \"(?<currentValue>.*?)\",\
-\\s*\"image_uri\": \"(?<depName>koorinc/koor-operator?):.*?\",\
-\\s*\"image_hash\": \".*?\""
+        '".*?": \\{\
+\\s*"version": "(?<currentValue>.*?)",\
+\\s*"image_uri": "(?<depName>koorinc/koor-operator?):.*?"'
       ],
-      autoReplaceStringTemplate: '"{{{newValue}}}": \\{\
+      autoReplaceStringTemplate: '"{{{newValue}}}": {\
             "version": "{{{newValue}}}",\
-            "image_uri": "{{{depName}}}:{{{newValue}}}",\
-            "image_hash": "{{{newDigest}}}"',
+            "image_uri": "{{{depName}}}:{{{newValue}}}"',
       datasourceTemplate: "docker",
     },
     {
       customType: "regex",
       fileMatch: ["^data/.*\\.json"],
       "matchStrings": [
-        "\".*?\": \\{\
-\\s*\"version\": \"(?<currentValue>.*?)\",\
-\\s*\"image_uri\": \"(?<depName>koorinc/ceph?):.*?\",\
-\\s*\"image_hash\": \".*?\""
+        '".*?": \\{\
+\\s*"version": "(?<currentValue>.*?)",\
+\\s*"image_uri": "(?<depName>koorinc/ceph?):.*?",\
+\\s*"image_hash": ".*?""
       ],
-      autoReplaceStringTemplate: '"{{{newValue}}}": \\{\
+      autoReplaceStringTemplate: '"{{{newValue}}}": {\
             "version": "{{{newValue}}}",\
             "image_uri": "{{{depName}}}:{{{newValue}}}",\
             "image_hash": "{{{newDigest}}}"',
