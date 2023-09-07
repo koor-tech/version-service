@@ -13,8 +13,8 @@
 \\s*"version": "(?<currentValue>.*?)",\
 \\s*"image_uri": "(?<depName>koorinc/koor-operator?):.*?"'
       ],
-      autoReplaceStringTemplate: '"{{{newValue}}}": {\
-            "version": "{{{newValue}}}",\
+      autoReplaceStringTemplate: '"{{{newValue}}}": {\n\
+            "version": "{{{newValue}}}",\n\
             "image_uri": "{{{depName}}}:{{{newValue}}}"',
       datasourceTemplate: "docker",
     },
@@ -26,8 +26,8 @@
 \\s*"version": "(?<currentValue>.*?)",\
 \\s*"image_uri": "(?<depName>koorinc/ceph?):.*?"'
       ],
-      autoReplaceStringTemplate: '"{{{newValue}}}": {\
-            "version": "{{{newValue}}}",\
+      autoReplaceStringTemplate: '"{{{newValue}}}": {\n
+            "version": "{{{newValue}}}"\n,
             "image_uri": "{{{depName}}}:{{{newValue}}}"',
       datasourceTemplate: "docker",
     },
