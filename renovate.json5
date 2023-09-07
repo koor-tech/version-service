@@ -17,7 +17,7 @@
       autoReplaceStringTemplate: "\"{{{replace 'v' '' newValue}}}\": {\n\
             \"version\": \"{{{replace 'v' '' newValue}}}\",\n\
             \"image_uri\": \"{{{depName}}}:{{{newValue}}}\",\n\
-            \"image_hash\": \"{{{newDigest}}}\"",
+            \"image_hash\": \"{{{newDigestShort}}}\"",
       datasourceTemplate: "docker",
     },
     {
@@ -32,7 +32,7 @@
       autoReplaceStringTemplate: "\"{{{replace 'v' '' newValue}}}\": {\n\
             \"version\": \"{{{replace 'v' '' newValue}}}\",\n\
             \"image_uri\": \"{{{depName}}}:{{{newValue}}}\",\n\
-            \"image_hash\": \"{{{newDigest}}}\"",
+            \"image_hash\": \"{{{newDigestShort}}}\"",
       datasourceTemplate: "docker",
     },
   ],
