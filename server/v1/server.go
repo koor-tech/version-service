@@ -22,8 +22,8 @@ import (
 	"log"
 	"sort"
 
+	"connectrpc.com/connect"
 	semver "github.com/Masterminds/semver/v3"
-	"github.com/bufbuild/connect-go"
 
 	apiv1 "github.com/koor-tech/version-service/api/v1"
 )

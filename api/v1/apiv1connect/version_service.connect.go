@@ -25,9 +25,9 @@
 package apiv1connect
 
 import (
+	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	connect_go "github.com/bufbuild/connect-go"
 	v1 "github.com/koor-tech/version-service/api/v1"
 	http "net/http"
 	strings "strings"
@@ -38,7 +38,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect_go.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion0_1_0
 
 const (
 	// VersionServiceName is the fully-qualified name of the VersionService service.
@@ -60,7 +60,7 @@ const (
 // VersionServiceClient is a client for the api.v1.VersionService service.
 type VersionServiceClient interface {
 	// Used by the Koor operator to get the latest version of each depencency product based on the current product versions.
-	Operator(context.Context, *connect_go.Request[v1.OperatorRequest]) (*connect_go.Response[v1.OperatorResponse], error)
+	Operator(context.Context, *connect.Request[v1.OperatorRequest]) (*connect.Response[v1.OperatorResponse], error)
 }
 
 // NewVersionServiceClient constructs a client for the api.v1.VersionService service. By default, it
@@ -70,10 +70,10 @@ type VersionServiceClient interface {
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewVersionServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) VersionServiceClient {
+func NewVersionServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) VersionServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &versionServiceClient{
-		operator: connect_go.NewClient[v1.OperatorRequest, v1.OperatorResponse](
+		operator: connect.NewClient[v1.OperatorRequest, v1.OperatorResponse](
 			httpClient,
 			baseURL+VersionServiceOperatorProcedure,
 			opts...,
@@ -83,18 +83,18 @@ func NewVersionServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 
 // versionServiceClient implements VersionServiceClient.
 type versionServiceClient struct {
-	operator *connect_go.Client[v1.OperatorRequest, v1.OperatorResponse]
+	operator *connect.Client[v1.OperatorRequest, v1.OperatorResponse]
 }
 
 // Operator calls api.v1.VersionService.Operator.
-func (c *versionServiceClient) Operator(ctx context.Context, req *connect_go.Request[v1.OperatorRequest]) (*connect_go.Response[v1.OperatorResponse], error) {
+func (c *versionServiceClient) Operator(ctx context.Context, req *connect.Request[v1.OperatorRequest]) (*connect.Response[v1.OperatorResponse], error) {
 	return c.operator.CallUnary(ctx, req)
 }
 
 // VersionServiceHandler is an implementation of the api.v1.VersionService service.
 type VersionServiceHandler interface {
 	// Used by the Koor operator to get the latest version of each depencency product based on the current product versions.
-	Operator(context.Context, *connect_go.Request[v1.OperatorRequest]) (*connect_go.Response[v1.OperatorResponse], error)
+	Operator(context.Context, *connect.Request[v1.OperatorRequest]) (*connect.Response[v1.OperatorResponse], error)
 }
 
 // NewVersionServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -102,8 +102,8 @@ type VersionServiceHandler interface {
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewVersionServiceHandler(svc VersionServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	versionServiceOperatorHandler := connect_go.NewUnaryHandler(
+func NewVersionServiceHandler(svc VersionServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	versionServiceOperatorHandler := connect.NewUnaryHandler(
 		VersionServiceOperatorProcedure,
 		svc.Operator,
 		opts...,
@@ -121,6 +121,6 @@ func NewVersionServiceHandler(svc VersionServiceHandler, opts ...connect_go.Hand
 // UnimplementedVersionServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedVersionServiceHandler struct{}
 
-func (UnimplementedVersionServiceHandler) Operator(context.Context, *connect_go.Request[v1.OperatorRequest]) (*connect_go.Response[v1.OperatorResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1.VersionService.Operator is not implemented"))
+func (UnimplementedVersionServiceHandler) Operator(context.Context, *connect.Request[v1.OperatorRequest]) (*connect.Response[v1.OperatorResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("api.v1.VersionService.Operator is not implemented"))
 }
