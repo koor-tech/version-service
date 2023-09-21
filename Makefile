@@ -96,7 +96,7 @@ $(LOCALBIN):
 BUF ?= $(LOCALBIN)/buf
 
 ## Tool Versions
-BUF_VERSION ?= v1.23.1
+BUF_VERSION ?= v1.26.1
 
 .PHONY: buf
 buf: $(BUF)
