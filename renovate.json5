@@ -36,4 +36,5 @@
       datasourceTemplate: "docker",
     },
   ],
+  "postUpdateOptions": ["gomodTidy"]
 }
