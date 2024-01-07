@@ -62,7 +62,7 @@ jobs:
           generate_release_notes: true
 
       - name: Deploy
-        uses: appleboy/ssh-action@v1.0.2
+        uses: appleboy/ssh-action@v1.0.3
         if: github.ref == 'refs/heads/main'
         env:
           SHA: ${{ github.sha }}
